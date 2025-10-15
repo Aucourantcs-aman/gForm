@@ -1,8 +1,8 @@
 <?php
 return [
     '@class' => 'Grav\\Common\\Config\\CompiledConfig',
-    'timestamp' => 1760525355,
-    'checksum' => 'b875996ff0a8b0a18206b3005ed03f17',
+    'timestamp' => 1760526539,
+    'checksum' => 'a0675ff4da606daa9285c9ef0698d10e',
     'files' => [
         'user/config' => [
             'media' => [
@@ -15,7 +15,7 @@ return [
             ],
             'plugins/recaptcha-form' => [
                 'file' => 'user/config/plugins/recaptcha-form.yaml',
-                'modified' => 1760525355
+                'modified' => 1760526539
             ],
             'plugins/recaptchacontact' => [
                 'file' => 'user/config/plugins/recaptchacontact.yaml',

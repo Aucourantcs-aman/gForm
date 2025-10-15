@@ -1,3 +1,0 @@
-[2025-10-15 12:52:42] grav.INFO: Validation keys: {"google":{"site_key":"6LdDjugrAAAAAG8pD5Hw9ebxuKuODHHW5d3hA9-Z","secret_key":"6LdDjugrAAAAAEWjjveiJ1y8nMp4H9ueETxUA8fo"},"cloudflare":{"site_key":"0x4AAAAAAB6tiMMZuWWpc7Rl","secret_key":"0x4AAAAAAB6tiLh3EwKOagofGmDrpZWTLZ8"}} [] []
-[2025-10-15 12:52:42] grav.INFO: $recaptchaSiteKey: 6LdDjugrAAAAAG8pD5Hw9ebxuKuODHHW5d3hA9-Z [] []
-[2025-10-15 12:52:42] grav.INFO: Recaptcha form injected into page content. [] []

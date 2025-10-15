@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'E:/xamp-htdocs/gravcms/gForm/user/config/plugins/recaptcha-form.yaml',
-    'modified' => 1760525355,
+    'modified' => 1760526539,
     'size' => 3271,
     'data' => [
         'enabled' => true,
