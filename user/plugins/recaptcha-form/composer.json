@@ -1,0 +1,25 @@
+{
+  "name": "developer/recaptcha-form",
+  "type": "grav-plugin",
+  "description": "custom description",
+  "version": "1.0.0",
+  "keywords": ["plugin"],
+  "homepage": "https://github.com/developer/grav-plugin-recaptcha-form",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Developer",
+      "email": "hello@aucourantcyberspace.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Grav\\Plugin\\RecaptchaForm\\": "classes/"
+    },
+    "classmap":  ["recaptcha-form.php"]
+  }
+}

@@ -1,0 +1,61 @@
+{% if recaptcha_form is defined %}
+
+<form method="post" enctype="multipart/form-data">
+    
+    {# Name Field #}
+    {% if recaptcha_form.name_field_type == 'full_name' %}
+        <input type="text" name="full_name" placeholder="Full Name" required>
+    {% else %}
+        <input type="text" name="first_name" placeholder="First Name" required>
+        <input type="text" name="last_name" placeholder="Last Name" required>
+    {% endif %}
+
+    {# Subject #}
+    {% if recaptcha_form.subject %}
+        <input type="text" name="subject" placeholder="Subject">
+    {% endif %}
+
+    {# Email #}
+    {% if recaptcha_form.email %}
+        <input type="email" name="email" placeholder="Email">
+    {% endif %}
+
+    {# Message #}
+    {% if recaptcha_form.message %}
+        <textarea name="message" placeholder="Message"></textarea>
+    {% endif %}
+
+    {# Address #}
+    {% if recaptcha_form.address %}
+        <textarea name="address" placeholder="Address"></textarea>
+    {% endif %}
+
+    {# Phone #}
+    {% if recaptcha_form.phone %}
+        <input type="text" name="phone" placeholder="Phone">
+    {% endif %}
+
+    {# Country Code #}
+    {% if recaptcha_form.country_code %}
+        <input type="text" name="country_code" placeholder="Country Code">
+    {% endif %}
+
+    {# Company #}
+    {% if recaptcha_form.company %}
+        <input type="text" name="company" placeholder="Company Name">
+    {% endif %}
+
+    {# Terms #}
+    {% if recaptcha_form.terms %}
+        <label><input type="checkbox" name="terms"> I agree to the terms and conditions</label>
+    {% endif %}
+
+    {# Attachment #}
+    {% if recaptcha_form.attachment %}
+        <input type="file" name="attachment">
+    {% endif %}
+
+    <button type="submit">Submit</button>
+</form>
+
+{% endif %}

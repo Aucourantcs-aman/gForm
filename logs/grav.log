@@ -1,0 +1,6 @@
+[2025-10-15 07:42:09] grav.INFO: RecaptchaForm Submission Data: {"first_name":"aman","last_name":"Khan","subject":"checking cForm","email":"hello@aucourantcyberspace.com","message":"rttyyuityutrttrytuytu","address":"7A\/67, West Extension Area Karol Bagh, New Delhi","phone":"8307624648","country_code":"+91","company":"Aucourant CyberSpace"} [] []
+[2025-10-15 07:42:09] grav.INFO: Page header recaptchaForm data: {"enabled":true,"subject":"Website Inquiry - Delhi Mind Clinic","recipient":"aman.aucourantcs@gmail.com"} [] []
+[2025-10-15 07:42:09] grav.ERROR: RecaptchaForm Email Error: Symfony\Component\Mime\Email::subject(): Argument #1 ($subject) must be of type string, null given, called in E:\xamp-htdocs\gravcms\gForm\user\plugins\email\classes\Message.php on line 17 [] []
+[2025-10-15 07:42:30] grav.INFO: Enabled fields: {"subject":true,"email":true,"message":true,"address":true,"phone":true,"country_code":true,"company":true,"terms":true,"attachment":true,"google":true,"cloudflare":true} [] []
+[2025-10-15 07:42:30] grav.INFO: Validation keys: {"google":{"site_key":"Google reCAPTCHA Site Key","secret_key":"Google reCAPTCHA Secret Key"},"cloudflare":{"site_key":"Cloudflare Site Key","secret_key":"Cloudflare Secret Key"}} [] []
+[2025-10-15 07:42:30] grav.INFO: Recaptcha form injected into page content. [] []

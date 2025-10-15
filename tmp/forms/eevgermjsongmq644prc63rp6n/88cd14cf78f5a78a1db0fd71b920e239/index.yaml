@@ -1,0 +1,97 @@
+form: flex-pages
+id: 'tmp://forms/session/88cd14cf78f5a78a1db0fd71b920e239'
+unique_id: 88cd14cf78f5a78a1db0fd71b920e239
+url: 'http://gform.local/admin/pages/typography'
+user:
+  username: admin
+  email: aman.aucourantcs@gmail.com
+timestamps:
+  created: 1760349193
+  updated: 1760349193
+data:
+  header:
+    title: Typography
+    media_order: null
+    body_classes: null
+    order_by: null
+    order_manual: null
+    recaptchacontact:
+      enabled: true
+      recipient: aman.aucourantcs@gmail.com
+      subject: 'Another subject form the email'
+    published: null
+    date: null
+    publish_date: null
+    unpublish_date: null
+    metadata: null
+    taxonomy: null
+    dateformat: null
+    menu: null
+    slug: null
+    redirect: null
+    process: null
+    twig_first: null
+    never_cache_twig: null
+    child_type: null
+    routable: null
+    cache_enable: null
+    visible: null
+    debugger: null
+    template: null
+    append_url_extension: null
+    redirect_default_route: null
+    routes:
+      default: null
+      canonical: null
+      aliases: null
+    admin:
+      children_display_order: null
+    login:
+      visibility_requires_access: null
+    access: null
+    permissions:
+      inherit: null
+      authors: null
+      groups: null
+  content: '# Typography'
+  folder: typography
+  route: null
+  name: default
+  ordering: true
+  order: null
+  blueprint: null
+  lang: null
+  xss_check: null
+  _post_entries_save: null
+files: {  }
+object:
+  type: pages
+  key: typography
+  storage_key: 02.typography
+  timestamp: 1760347758
+  serialized:
+    __META:
+      key: typography
+      storage_key: 02.typography
+      template: default
+      storage_timestamp: 1760347758
+      markdown:
+        '': { default: 1760347758 }
+      checksum: 26f7a07c4c67b8fba14646285bd254f5
+    storage_key: 02.typography
+    parent_key: ''
+    order: '02.'
+    folder: typography
+    template: default
+    lang: ''
+    header:
+      title: Typography
+      recaptchacontact:
+        enabled: true
+        subject: 'Another subject form the email'
+        recipient: aman.aucourantcs@gmail.com
+    root: false
+    frontmatter: "title: Typography\nrecaptchacontact: \n  enabled: true\n  subject: \"Another subject form the email\"\n  recipient: \"aman.aucourantcs@gmail.com\"\n"
+    markdown: '# Typography'
+    slug: typography
+    name: default.md

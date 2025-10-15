@@ -1,0 +1,24 @@
+enabled: true
+from: aman.aucourantcs@gmail.com
+to: aman.aucourantcs@gmail.com
+mailer:
+  engine: smtp
+  smtp:
+    server: smtp.gmail.com
+    port: 587
+    encryption: tls
+    user: aman.aucourantcs@gmail.com
+    password: 'mnsq gwmd oqsl mavn'
+  sendmail:
+    bin: '/usr/sbin/sendmail -bs'
+content_type: text/html
+debug: false
+cc: null
+bcc: null
+reply_to: null
+body: null
+
+# recaptcha
+
+# site key : 6LdDjugrAAAAAG8pD5Hw9ebxuKuODHHW5d3hA9-Z
+# secret Key : 6LdDjugrAAAAAEWjjveiJ1y8nMp4H9ueETxUA8fo

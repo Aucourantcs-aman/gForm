@@ -1,0 +1,31 @@
+form: flex-pages
+id: 'tmp://forms/session/2886f369ea18e6f4929c7d5e3a4d4cff'
+unique_id: 2886f369ea18e6f4929c7d5e3a4d4cff
+url: '/pages/contact/:add'
+user:
+  username: admin
+  email: aman.aucourantcs@gmail.com
+timestamps:
+  created: 1760338528
+  updated: 1760338528
+data: null
+files: {  }
+object:
+  type: pages
+  key: contact
+  storage_key: ''
+  timestamp: 0
+  serialized:
+    __META: {  }
+    storage_key: ''
+    parent_key: ''
+    order: '03.'
+    folder: contact
+    template: default
+    lang: ''
+    root: false
+    route: /
+    name: default
+    header:
+      title: Contact
+    frontmatter: "title: Contact\n"
