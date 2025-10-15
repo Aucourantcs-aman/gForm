@@ -1,0 +1,123 @@
+1761134061
+a:2:{s:7:"content";s:6552:"<h1>Home</h1><style type="text/css">/* ===========================
+   ReCaptcha Form Styling
+=========================== */
+
+/* Form container */
+#recaptcha-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Form groups */
+#recaptcha-form .form-group {
+    flex: 1 1 45%; /* default two per row */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0; /* spacing handled by gap */
+}
+
+/* Make message full width */
+#recaptcha-form .form-message {
+    flex: 1 1 100%;
+}
+
+/* Labels */
+#recaptcha-form .form-label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Inputs and textarea */
+#recaptcha-form .form-input {
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Focus state for inputs */
+#recaptcha-form .form-input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+    outline: none;
+}
+
+/* Checkbox styling */
+#recaptcha-form .form-checkbox {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+/* Submit button */
+#recaptcha-form .form-button {
+    background-color: #4a90e2;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+    flex: 1 1 100%;
+}
+
+/* Submit hover */
+#recaptcha-form .form-button:hover {
+    background-color: #357ABD;
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #recaptcha-form {
+        padding: 20px;
+    }
+
+    #recaptcha-form .form-input {
+        font-size: 13px;
+        padding: 9px 10px;
+    }
+
+    #recaptcha-form .form-button {
+        width: 100%;
+        font-size: 15px;
+        padding: 12px;
+    }
+
+    /* Single column on small screens */
+    #recaptcha-form .form-group {
+        flex: 1 1 100%;
+    }
+}
+
+/* Checkbox + label inline */
+#recaptcha-form .form-terms {
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Textarea height */
+#recaptcha-form textarea.form-input {
+    min-height: 100px;
+    resize: vertical;
+}
+#country_code{
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+.form-message.success { color: green; }
+.form-message.error { color: red; }</style><form method="post" action="" id="recaptcha-form" class="recaptcha-form"><div class="form-group form-first-name"><label for="first_name" class="form-label">First Name:</label><input type="text" id="first_name" name="first_name" class="form-input"></div><div class="form-group form-last-name"><label for="last_name" class="form-label">Last Name:</label><input type="text" id="last_name" name="last_name" class="form-input"></div><div class="form-group form-subject"><label for="subject" class="form-label">Subject:</label><input type="text" id="subject" name="subject" class="form-input"></div><div class="form-group form-email"><label for="email" class="form-label">Email:</label><input type="email" id="email" name="email" class="form-input"></div><div class="form-group form-message"><label for="message" class="form-label">Message:</label><textarea id="message" name="message" class="form-input"></textarea></div><div class="form-group form-address"><label for="address" class="form-label">Address:</label><input type="text" id="address" name="address" class="form-input"></div><div class="form-group form-phone"><label for="phone" class="form-label">Phone:</label><input type="text" id="phone" name="phone" class="form-input"></div><div class="form-group form-country-code"><label for="country_code" class="form-label">Country Code:</label><select id="country_code" name="country_code" class="form-input"><option value="+1">United States (+1)</option><option value="+7">Russia (+7)</option><option value="+20">Egypt (+20)</option><option value="+27">South Africa (+27)</option><option value="+30">Greece (+30)</option><option value="+31">Netherlands (+31)</option><option value="+32">Belgium (+32)</option><option value="+33">France (+33)</option><option value="+34">Spain (+34)</option><option value="+36">Hungary (+36)</option><option value="+39">Italy (+39)</option><option value="+40">Romania (+40)</option><option value="+41">Switzerland (+41)</option><option value="+43">Austria (+43)</option><option value="+44">United Kingdom (+44)</option><option value="+45">Denmark (+45)</option><option value="+46">Sweden (+46)</option><option value="+47">Norway (+47)</option><option value="+48">Poland (+48)</option><option value="+49">Germany (+49)</option><option value="+51">Peru (+51)</option><option value="+52">Mexico (+52)</option><option value="+53">Cuba (+53)</option><option value="+54">Argentina (+54)</option><option value="+55">Brazil (+55)</option><option value="+56">Chile (+56)</option><option value="+57">Colombia (+57)</option><option value="+58">Venezuela (+58)</option><option value="+60">Malaysia (+60)</option><option value="+61">Australia (+61)</option><option value="+62">Indonesia (+62)</option><option value="+63">Philippines (+63)</option><option value="+64">New Zealand (+64)</option><option value="+65">Singapore (+65)</option><option value="+66">Thailand (+66)</option><option value="+81">Japan (+81)</option><option value="+82">South Korea (+82)</option><option value="+84">Vietnam (+84)</option><option value="+86">China (+86)</option><option value="+90">Turkey (+90)</option><option value="+91">India (+91)</option><option value="+92">Pakistan (+92)</option><option value="+93">Afghanistan (+93)</option><option value="+94">Sri Lanka (+94)</option><option value="+98">Iran (+98)</option></select></div><div class="form-group form-company"><label for="company" class="form-label">Company:</label><input type="text" id="company" name="company" class="form-input"></div><div class="form-group form-terms"><input type="checkbox" id="terms" name="terms" class="form-checkbox"><label for="terms" class="form-label">Accept Terms</label></div><div class="form-group form-attachment"><label for="attachment" class="form-label">Attachment:</label><input type="file" id="attachment" name="attachment" class="form-input"></div><div class="form-group form-submit"><button type="submit" id="submit" class="form-button">Submit</button></div></form>";s:12:"content_meta";N;}

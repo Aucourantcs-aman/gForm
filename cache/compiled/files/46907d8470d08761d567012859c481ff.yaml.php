@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'E:/xamp-htdocs/gravcms/gForm/user/config/plugins/recaptcha-form.yaml',
-    'modified' => 1760526539,
+    'modified' => 1760528983,
     'size' => 3271,
     'data' => [
         'enabled' => true,
@@ -139,10 +139,10 @@ return [
 }
 .form-message.success { color: green; }
 .form-message.error { color: red; }',
-        'google_toggle' => '1',
+        'google_toggle' => '0',
         'google_site_key' => '6LdDjugrAAAAAG8pD5Hw9ebxuKuODHHW5d3hA9-Z',
         'google_secret_key' => '6LdDjugrAAAAAEWjjveiJ1y8nMp4H9ueETxUA8fo',
-        'cloudflare_toggle' => '1',
+        'cloudflare_toggle' => '0',
         'cloudflare_site_key' => '0x4AAAAAAB6tiMMZuWWpc7Rl',
         'cloudflare_secret_key' => '0x4AAAAAAB6tiLh3EwKOagofGmDrpZWTLZ8'
     ]

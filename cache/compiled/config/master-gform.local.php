@@ -1,8 +1,8 @@
 <?php
 return [
     '@class' => 'Grav\\Common\\Config\\CompiledConfig',
-    'timestamp' => 1760526539,
-    'checksum' => 'a0675ff4da606daa9285c9ef0698d10e',
+    'timestamp' => 1760529243,
+    'checksum' => '2f2c2e34a9cd573902151e62cc18234b',
     'files' => [
         'user/config' => [
             'media' => [
@@ -11,11 +11,11 @@ return [
             ],
             'plugins/email' => [
                 'file' => 'user/config/plugins/email.yaml',
-                'modified' => 1760525326
+                'modified' => 1760529231
             ],
             'plugins/recaptcha-form' => [
                 'file' => 'user/config/plugins/recaptcha-form.yaml',
-                'modified' => 1760526539
+                'modified' => 1760528983
             ],
             'plugins/recaptchacontact' => [
                 'file' => 'user/config/plugins/recaptchacontact.yaml',
@@ -256,14 +256,14 @@ return [
                         'port' => 587,
                         'encryption' => 'tls',
                         'user' => 'aman.aucourantcs@gmail.com',
-                        'password' => 'mnsq gwmd oqsl mavn'
+                        'password' => 'dcaidujocqadmmhc'
                     ],
                     'sendmail' => [
-                        'bin' => '/usr/sbin/sendmail -bs'
+                        'bin' => NULL
                     ]
                 ],
                 'content_type' => 'text/html',
-                'debug' => false,
+                'debug' => true,
                 'cc' => NULL,
                 'bcc' => NULL,
                 'reply_to' => NULL,
@@ -566,10 +566,10 @@ return [
 }
 .form-message.success { color: green; }
 .form-message.error { color: red; }',
-                'google_toggle' => '1',
+                'google_toggle' => '0',
                 'google_site_key' => '6LdDjugrAAAAAG8pD5Hw9ebxuKuODHHW5d3hA9-Z',
                 'google_secret_key' => '6LdDjugrAAAAAEWjjveiJ1y8nMp4H9ueETxUA8fo',
-                'cloudflare_toggle' => '1',
+                'cloudflare_toggle' => '0',
                 'cloudflare_site_key' => '0x4AAAAAAB6tiMMZuWWpc7Rl',
                 'cloudflare_secret_key' => '0x4AAAAAAB6tiLh3EwKOagofGmDrpZWTLZ8'
             ],

@@ -35,7 +35,6 @@ class RecaptchaFormPlugin extends Plugin
             $this->handleFormSubmission();
         }
     }
-
     public function onAdminMenu(): void
     {
         $this->grav['twig']->plugins_hooked_nav['Recaptcha Form'] = [
@@ -81,7 +80,7 @@ class RecaptchaFormPlugin extends Plugin
             }
 
             // Log validation keys
-            $this->grav['log']->info('Validation keys: ' . json_encode($validationKeys));
+            // $this->grav['log']->info('Validation keys: ' . json_encode($validationKeys));
 
             // Make sure the name field is included if name_field_type is set
             if (!empty($config['name_field_type'])) {
@@ -251,12 +250,22 @@ class RecaptchaFormPlugin extends Plugin
                 }
             }
             $recaptchaSiteKey = $validationKeys['google']['site_key'] ?? '';
-            $this->grav['log']->info('$recaptchaSiteKey: ' . $recaptchaSiteKey);
+            // $this->grav['log']->info('$recaptchaSiteKey: ' . $recaptchaSiteKey);
 
             if (!empty($recaptchaSiteKey)) {
                 $formHtml .= '<div class="g-recaptcha" data-sitekey="' . htmlspecialchars($recaptchaSiteKey) . '"></div>';
                 $formHtml .= '<p style="font-size:12px;color:#999;">reCAPTCHA enabled</p>';
                 $formHtml .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
+                // Client-side validation
+                $formHtml .= '<script>
+        document.getElementById("recaptcha-form").addEventListener("submit", function(e) {
+            if (typeof grecaptcha !== "undefined" && grecaptcha.getResponse() === "") {
+                alert("Please complete the Google reCAPTCHA.");
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>';
             }
             // Inject Cloudflare Turnstile
             if (!empty($validationKeys['cloudflare']['site_key'])) {
@@ -274,7 +283,7 @@ class RecaptchaFormPlugin extends Plugin
             // Inject into current page content
             $page->content($page->content() . $formHtml);
 
-            $this->grav['log']->info('Recaptcha form injected into page content.');
+            // $this->grav['log']->info('Recaptcha form injected into page content.');
         }
     }
     private function handleFormSubmission(): void
@@ -300,14 +309,104 @@ class RecaptchaFormPlugin extends Plugin
             }
         }
 
-        // Log submitted fields if any success
-        if (!empty($this->formMessages)) {
-            foreach ($postData as $key => $value) {
-                $this->grav['log']->info("Field '{$key}': " . (is_array($value) ? json_encode($value) : $value));
-            }
+        // 1. Get form data
+        $postData = $_POST;
+        // $this->grav['log']->info('=== RecaptchaForm Submission Received ===');
+        foreach ($postData as $key => $value) {
+            $displayValue = is_array($value) ? json_encode($value) : $value;
+            $this->grav['log']->info("Form Field '{$key}': {$displayValue}");
         }
-    }
 
+        // 3. Build email subject and body
+        $subject = $postData['subject'] ?? 'New Contact Form Submission';
+        $body = '<h2>Contact Form Submission</h2><ul>';
+        foreach ($postData as $key => $value) {
+            $displayValue = is_array($value) ? json_encode($value) : $value;
+            $body .= '<li><strong>' . htmlspecialchars($key, ENT_QUOTES, 'UTF-8') . ':</strong> '
+                . htmlspecialchars($displayValue, ENT_QUOTES, 'UTF-8') . '</li>';
+        }
+        $body .= '</ul>';
+
+        $this->grav['log']->info('=== Email Body ===');
+        $this->grav['log']->info($body);
+
+        // 4. Get email config
+        $emailConfig = $this->config->get('plugins.email');
+        $to = $emailConfig['to'] ?? 'aman.aucourantcs@gmail.com';
+        $from = $emailConfig['from'] ?? 'aman.aucourantcs@gmail.com';
+
+        // $password = $emailConfig['password'];
+        //  $this->grav['log']->info($password);
+
+        $this->grav['log']->info("Preparing to send email: from='{$from}' to='{$to}'");
+
+        if (!$to || !$from) {
+            $this->grav['log']->error('Email sending failed: missing "to" or "from" address.');
+            return;
+        }
+
+        try {
+            // 5. Send email via Grav Email plugin
+            if ($this->grav->offsetExists('Email')) {
+                $this->grav['log']->info('Email plugin found. Preparing message object.');
+
+                /** @var \Grav\Plugin\Email\Email $emailService */
+                $emailService = $this->grav['Email'];
+
+                // Create a Message object
+                $message = $emailService->message($subject, $body, 'text/html');
+                $this->grav['log']->info('Message object created.');
+
+                // Set from and to
+                $message->setFrom($from);
+                $this->grav['log']->info("Message From set: {$from}");
+
+                $message->setTo($to);
+                $this->grav['log']->info("Message To set: {$to}");
+
+                // Log message content
+                $this->grav['log']->info("Message subject: {$subject}");
+                $this->grav['log']->info("Message body: {$body}");
+
+                // Send email
+                $sent = $emailService->send($message);
+
+                if ($sent) {
+                    $this->grav['log']->info('RecaptchaForm email sent successfully using Email plugin.');
+                } else {
+                    $this->grav['log']->error('Email sending failed: Email plugin send() returned false.');
+                    $this->grav['log']->error('Email plugin config: ' . json_encode($this->config->get('plugins.email')));
+                }
+            } else {
+                $this->grav['log']->warning('Email plugin not found. Falling back to PHP mail().');
+
+                // Fallback to native PHP mail()
+                $headers = "MIME-Version: 1.0\r\n";
+                $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+                $headers .= "From: {$from}\r\n";
+
+                $this->grav['log']->info("PHP mail headers: {$headers}");
+
+                $sent = mail($to, $subject, $body, $headers);
+
+                if ($sent) {
+                    $this->grav['log']->info('RecaptchaForm email sent successfully via PHP mail().');
+                } else {
+                    $this->grav['log']->error('Email sending failed: PHP mail() returned false.');
+                }
+            }
+        } catch (\Exception $e) {
+            $this->grav['log']->error('Email sending failed with exception: ' . $e->getMessage());
+            $this->grav['log']->error('Exception trace: ' . $e->getTraceAsString());
+        }
+
+        // Log submitted fields if any success
+        // if (!empty($this->formMessages)) {
+        //     foreach ($postData as $key => $value) {
+        //         // $this->grav['log']->info("Field '{$key}': " . (is_array($value) ? json_encode($value) : $value));
+        //     }
+        // }
+    }
     private function verifyRecaptcha(string $response, string $secret, bool $cloudflare = false): bool
     {
         $url = $cloudflare
@@ -333,7 +432,6 @@ class RecaptchaFormPlugin extends Plugin
 
         return !empty($verify['success']);
     }
-
     private function addFormMessage(bool $success, string $type): void
     {
         $this->formMessages[] = [
@@ -343,6 +441,4 @@ class RecaptchaFormPlugin extends Plugin
                 : "$type verification failed. Please try again."
         ];
     }
-
-
 }

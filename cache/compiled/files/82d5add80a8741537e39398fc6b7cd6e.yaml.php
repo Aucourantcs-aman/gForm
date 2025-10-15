@@ -2,8 +2,8 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'E:/xamp-htdocs/gravcms/gForm/user/config/plugins/email.yaml',
-    'modified' => 1760525326,
-    'size' => 776,
+    'modified' => 1760529231,
+    'size' => 347,
     'data' => [
         'enabled' => true,
         'from' => 'aman.aucourantcs@gmail.com',
@@ -15,14 +15,14 @@ return [
                 'port' => 587,
                 'encryption' => 'tls',
                 'user' => 'aman.aucourantcs@gmail.com',
-                'password' => 'mnsq gwmd oqsl mavn'
+                'password' => 'dcaidujocqadmmhc'
             ],
             'sendmail' => [
-                'bin' => '/usr/sbin/sendmail -bs'
+                'bin' => NULL
             ]
         ],
         'content_type' => 'text/html',
-        'debug' => false,
+        'debug' => true,
         'cc' => NULL,
         'bcc' => NULL,
         'reply_to' => NULL,

@@ -8,28 +8,12 @@ mailer:
     port: 587
     encryption: tls
     user: aman.aucourantcs@gmail.com
-    password: 'mnsq gwmd oqsl mavn'
+    password: 'dcaidujocqadmmhc'
   sendmail:
-    bin: '/usr/sbin/sendmail -bs'
+    bin: null
 content_type: text/html
-debug: false
+debug: true
 cc: null
 bcc: null
 reply_to: null
 body: null
-
-# recaptcha
-
-# v2 keys
-# site key : 6LdDjugrAAAAAG8pD5Hw9ebxuKuODHHW5d3hA9-Z
-# secret Key : 6LdDjugrAAAAAEWjjveiJ1y8nMp4H9ueETxUA8fo
-
-# v3 keys
-# site key : 6LdZH-srAAAAAPvd0-plksu_iUUK537GiBhOhZyg
-# secret Key : 6LdZH-srAAAAALqS-mK0n26EmleM2Qg49RlMNqVh
-
-# cloudflare recaptcha
-
-# site key : 0x4AAAAAAB6tiMMZuWWpc7Rl
-# secret Key : 0x4AAAAAAB6tiLh3EwKOagofGmDrpZWTLZ8
-
