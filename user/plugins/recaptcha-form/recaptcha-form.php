@@ -5,9 +5,7 @@ use Grav\Common\Plugin;
 
 class RecaptchaFormPlugin extends Plugin
 {
-    /**
-     * Get subscribed events
-     */
+
     public static function getSubscribedEvents(): array
     {
         return [
@@ -15,23 +13,27 @@ class RecaptchaFormPlugin extends Plugin
             'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
         ];
     }
-
-    /**
-     * Initialize the plugin
-     */
     public function onPluginsInitialized(): void
     {
-        // Only load admin menu in admin
         if ($this->isAdmin()) {
             $this->enable([
                 'onAdminMenu' => ['onAdminMenu', 0]
             ]);
         }
+        $this->enable([
+            'onPageInitialized' => ['onPageInitialized', 0]
+        ]);
+    }
+    public function onPageInitialized(): void
+    {
+        $request = $this->grav['request'];
+
+        // Check if the form was submitted
+        if ($this->grav['uri']->post('submit') || !empty($_POST)) {
+            $this->handleFormSubmission();
+        }
     }
 
-    /**
-     * Add plugin to admin menu
-     */
     public function onAdminMenu(): void
     {
         $this->grav['twig']->plugins_hooked_nav['Recaptcha Form'] = [
@@ -39,10 +41,6 @@ class RecaptchaFormPlugin extends Plugin
             'icon' => 'fa-forumbee'
         ];
     }
-
-    /**
-     * Pass form variables to Twig for frontend pages
-     */
     public function onTwigSiteVariables(): void
     {
         $page = $this->grav['page'];
@@ -61,7 +59,7 @@ class RecaptchaFormPlugin extends Plugin
                     $enabledFields[$fieldName] = true;
                 }
             }
-            $this->grav['log']->info('Enabled fields: ' . json_encode($enabledFields));
+            // $this->grav['log']->info('Enabled fields: ' . json_encode($enabledFields));
 
             // Get validation keys if the validation is enabled
             $validationKeys = [];
@@ -81,7 +79,7 @@ class RecaptchaFormPlugin extends Plugin
             }
 
             // Log validation keys
-            $this->grav['log']->info('Validation keys: ' . json_encode($validationKeys));
+            // $this->grav['log']->info('Validation keys: ' . json_encode($validationKeys));
 
             // Make sure the name field is included if name_field_type is set
             if (!empty($config['name_field_type'])) {
@@ -107,6 +105,12 @@ class RecaptchaFormPlugin extends Plugin
                     continue;
 
                 switch ($field) {
+                    case 'subject':
+                        $formHtml .= '<div class="form-group form-subject">';
+                        $formHtml .= '<label for="subject" class="form-label">Subject:</label>';
+                        $formHtml .= '<input type="text" id="subject" name="subject" class="form-input">';
+                        $formHtml .= '</div>';
+                        break;
                     case 'name':
                         if (($enabledFields['name_field_type'] ?? 'full_name') === 'full_name') {
                             $formHtml .= '<div class="form-group form-name">';
@@ -250,6 +254,17 @@ class RecaptchaFormPlugin extends Plugin
             $page->content($page->content() . $formHtml);
 
             $this->grav['log']->info('Recaptcha form injected into page content.');
+        }
+    }
+    private function handleFormSubmission(): void
+    {
+        $postData = $_POST;
+        $this->grav['log']->info('RecaptchaForm Submission Data: ' . json_encode($postData));
+        foreach ($postData as $key => $value) {
+            if (is_array($value)) {
+                $value = json_encode($value);
+            }
+            $this->grav['log']->info("Field '{$key}': {$value}");
         }
     }
 
