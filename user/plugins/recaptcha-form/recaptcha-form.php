@@ -5,7 +5,8 @@ use Grav\Common\Plugin;
 
 class RecaptchaFormPlugin extends Plugin
 {
-
+    private $formMessage = '';
+    private $formMessageType = '';
     public static function getSubscribedEvents(): array
     {
         return [
@@ -79,7 +80,7 @@ class RecaptchaFormPlugin extends Plugin
             }
 
             // Log validation keys
-            // $this->grav['log']->info('Validation keys: ' . json_encode($validationKeys));
+            $this->grav['log']->info('Validation keys: ' . json_encode($validationKeys));
 
             // Make sure the name field is included if name_field_type is set
             if (!empty($config['name_field_type'])) {
@@ -99,6 +100,12 @@ class RecaptchaFormPlugin extends Plugin
 
             // Start form tag
             $formHtml .= '<form method="post" action="" id="recaptcha-form" class="recaptcha-form">';
+            // Display form message if set
+            if (!empty($this->formMessage)) {
+                $formHtml .= '<div class="form-message ' . htmlspecialchars($this->formMessageType) . '" style="margin-bottom:10px;color:'
+                    . ($this->formMessageType === 'success' ? 'green' : 'red') . ';">'
+                    . htmlspecialchars($this->formMessage) . '</div>';
+            }
 
             foreach ($enabledFields as $field => $enabled) {
                 if (!$enabled)
@@ -242,7 +249,20 @@ class RecaptchaFormPlugin extends Plugin
                         break;
                 }
             }
+            $recaptchaSiteKey = $validationKeys['google']['site_key'] ?? '';
+            $this->grav['log']->info('$recaptchaSiteKey: ' . $recaptchaSiteKey);
 
+            if (!empty($recaptchaSiteKey)) {
+                $formHtml .= '<div class="g-recaptcha" data-sitekey="' . htmlspecialchars($recaptchaSiteKey) . '"></div>';
+                $formHtml .= '<p style="font-size:12px;color:#999;">reCAPTCHA enabled</p>';
+                $formHtml .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
+            }
+
+            // Add Cloudflare Turnstile
+            if (!empty($validationKeys['cloudflare']['site_key'])) {
+                $formHtml .= '<div class="cf-turnstile" data-sitekey="' . htmlspecialchars($validationKeys['cloudflare']['site_key']) . '"></div>';
+                $formHtml .= '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>';
+            }
             // Submit button
             $formHtml .= '<div class="form-group form-submit">';
             $formHtml .= '<button type="submit" id="submit" class="form-button">Submit</button>';
@@ -259,13 +279,89 @@ class RecaptchaFormPlugin extends Plugin
     private function handleFormSubmission(): void
     {
         $postData = $_POST;
-        $this->grav['log']->info('RecaptchaForm Submission Data: ' . json_encode($postData));
+        $config = $this->config->get('plugins.recaptcha-form');
+        $secretKey = $config['google_secret_key'] ?? '';
+
+        $this->grav['log']->info('Using Secret Key: ' . $secretKey);
+
+        // reCAPTCHA response token
+        $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
+        $remoteIp = $_SERVER['REMOTE_ADDR'] ?? '';
+
+        if (empty($recaptchaResponse)) {
+            $this->grav['log']->warning('⚠️ Missing g-recaptcha-response in POST data.');
+            return;
+        }
+
+        // Verify reCAPTCHA
+        $verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+        $data = [
+            'secret' => $secretKey,
+            'response' => $recaptchaResponse,
+            'remoteip' => $remoteIp
+        ];
+
+        $options = [
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+                'content' => http_build_query($data)
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($verifyUrl, false, $context);
+        $verification = json_decode($result, true);
+
+        if (!empty($verification['success'])) {
+            $this->grav['log']->info('✅ Google reCAPTCHA verified successfully.');
+            $this->formMessage = 'Google reCAPTCHA verified successfully.!';
+            $this->formMessageType = 'success';
+        } else {
+            $this->grav['log']->warning('❌ Google reCAPTCHA verification failed.');
+            $this->formMessage = 'Google reCAPTCHA verification failed. Please try again.';
+            $this->formMessageType = 'error';
+            return; // stop further processing if failed
+        }
+
+
+        // Continue normal form processing
         foreach ($postData as $key => $value) {
-            if (is_array($value)) {
-                $value = json_encode($value);
-            }
-            $this->grav['log']->info("Field '{$key}': {$value}");
+            $this->grav['log']->info("Field '{$key}': " . (is_array($value) ? json_encode($value) : $value));
         }
     }
 
+    private function verifyRecaptcha(string $responseToken, string $secretKey, bool $cloudflare = false): bool
+    {
+        $verifyUrl = $cloudflare
+            ? 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
+            : 'https://www.google.com/recaptcha/api/siteverify';
+
+        $data = ['secret' => $secretKey, 'response' => $responseToken];
+        if (!$cloudflare)
+            $data['remoteip'] = $_SERVER['REMOTE_ADDR'] ?? '';
+
+        $options = [
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+                'content' => http_build_query($data)
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($verifyUrl, false, $context);
+        $verification = json_decode($result, true);
+
+        return !empty($verification['success']);
+    }
+
+    private function setFormMessage(bool $success, string $provider): void
+    {
+        if ($success) {
+            $this->formMessage = "$provider verified successfully!";
+            $this->formMessageType = 'success';
+        } else {
+            $this->formMessage = "$provider verification failed. Please try again.";
+            $this->formMessageType = 'error';
+        }
+    }
 }
