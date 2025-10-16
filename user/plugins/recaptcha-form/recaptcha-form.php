@@ -380,6 +380,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // 1. Get form data
         $postData = $_POST;
+        // Check if a file was uploaded
+        if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
+            $file = $_FILES['attachment'];
+
+            // Log basic info about the uploaded file
+            $this->grav['log']->info('Attachment detected: ' . $file['name']);
+            $this->grav['log']->info('Attachment type: ' . $file['type']);
+            $this->grav['log']->info('Attachment size: ' . $file['size'] . ' bytes');
+        } else {
+            $this->grav['log']->info('No attachment uploaded or upload error.');
+        }
         // $this->grav['log']->info('=== RecaptchaForm Submission Received ===');
         foreach ($postData as $key => $value) {
             $displayValue = is_array($value) ? json_encode($value) : $value;
