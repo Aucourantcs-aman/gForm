@@ -2,8 +2,8 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'E:/xamp-htdocs/gravcms/gForm/user/config/plugins/recaptcha-form.yaml',
-    'modified' => 1760595162,
-    'size' => 3269,
+    'modified' => 1760600048,
+    'size' => 3271,
     'data' => [
         'enabled' => true,
         'text_var' => 'Custom Text added by the **Recaptcha Form** plugin (disable plugin to remove)',
@@ -15,8 +15,8 @@ return [
         'phone_toggle' => true,
         'country_code_toggle' => true,
         'company_toggle' => true,
-        'terms_toggle' => true,
-        'attachment_toggle' => true,
+        'terms_toggle' => false,
+        'attachment_toggle' => false,
         'form_custom_css' => '/* ===========================
    ReCaptcha Form Styling
 =========================== */

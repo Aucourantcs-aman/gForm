@@ -1,8 +1,8 @@
 <?php
 return [
     '@class' => 'Grav\\Common\\Config\\CompiledConfig',
-    'timestamp' => 1760595162,
-    'checksum' => '43682800f0f54400fbe5a748bd233a86',
+    'timestamp' => 1760600048,
+    'checksum' => '2183eaf1aa92f52f4adbcaa6ae796335',
     'files' => [
         'user/config' => [
             'media' => [
@@ -15,7 +15,7 @@ return [
             ],
             'plugins/recaptcha-form' => [
                 'file' => 'user/config/plugins/recaptcha-form.yaml',
-                'modified' => 1760595162
+                'modified' => 1760600048
             ],
             'plugins/recaptchacontact' => [
                 'file' => 'user/config/plugins/recaptchacontact.yaml',
@@ -442,8 +442,8 @@ return [
                 'phone_toggle' => true,
                 'country_code_toggle' => true,
                 'company_toggle' => true,
-                'terms_toggle' => true,
-                'attachment_toggle' => true,
+                'terms_toggle' => false,
+                'attachment_toggle' => false,
                 'form_custom_css' => '/* ===========================
    ReCaptcha Form Styling
 =========================== */

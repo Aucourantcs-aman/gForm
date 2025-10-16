@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit7b404a3d35f59940dd7d23902d18e666
 {
     public static $prefixLengthsPsr4 = array (
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
         'G' => 
         array (
             'Grav\\Plugin\\RecaptchaForm\\' => 26,
@@ -14,6 +18,10 @@ class ComposerStaticInit7b404a3d35f59940dd7d23902d18e666
     );
 
     public static $prefixDirsPsr4 = array (
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
         'Grav\\Plugin\\RecaptchaForm\\' => 
         array (
             0 => __DIR__ . '/../..' . '/classes',
