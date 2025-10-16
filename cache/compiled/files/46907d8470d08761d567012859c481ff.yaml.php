@@ -2,13 +2,13 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'E:/xamp-htdocs/gravcms/gForm/user/config/plugins/recaptcha-form.yaml',
-    'modified' => 1760528983,
-    'size' => 3271,
+    'modified' => 1760595162,
+    'size' => 3269,
     'data' => [
         'enabled' => true,
         'text_var' => 'Custom Text added by the **Recaptcha Form** plugin (disable plugin to remove)',
         'subject_toggle' => true,
-        'name_field_type' => 'fname_lname',
+        'name_field_type' => 'full_name',
         'email_toggle' => true,
         'message_toggle' => true,
         'address_toggle' => true,

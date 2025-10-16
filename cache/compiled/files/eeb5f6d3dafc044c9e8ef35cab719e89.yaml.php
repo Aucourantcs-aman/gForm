@@ -2,8 +2,8 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'E:/xamp-htdocs/gravcms/gForm/user/plugins/recaptcha-form/blueprints.yaml',
-    'modified' => 1760433697,
-    'size' => 7331,
+    'modified' => 1760595143,
+    'size' => 7367,
     'data' => [
         'name' => 'Recaptcha Form',
         'slug' => 'recaptcha-form',
@@ -54,7 +54,7 @@ return [
                                 'subject_toggle' => [
                                     'type' => 'toggle',
                                     'label' => 'Include Subject Field',
-                                    'help' => 'Choose whether to include a Subject field in the form.',
+                                    'help' => 'Choose whether to include a Subject field in the form. REQUIRED',
                                     'highlight' => 0,
                                     'default' => 1,
                                     'options' => [
@@ -72,7 +72,7 @@ return [
                                     'validate' => [
                                         'required' => true
                                     ],
-                                    'help' => 'Choose whether to show a single Full Name field or separate First and Last Name fields.',
+                                    'help' => 'Choose whether to show a single Full Name field or separate First and Last Name fields. REQUIRED',
                                     'options' => [
                                         'full_name' => 'Full Name',
                                         'fname_lname' => 'First Name & Last Name'
@@ -82,7 +82,7 @@ return [
                                 'email_toggle' => [
                                     'type' => 'toggle',
                                     'label' => 'Include Email Field',
-                                    'help' => 'Choose whether to include an Email field in the form.',
+                                    'help' => 'Choose whether to include an Email field in the form. REQUIRED',
                                     'highlight' => 0,
                                     'default' => 1,
                                     'options' => [
@@ -97,7 +97,7 @@ return [
                                 'message_toggle' => [
                                     'type' => 'toggle',
                                     'label' => 'Include Message Field',
-                                    'help' => 'Choose whether to include a Message textarea field in the form.',
+                                    'help' => 'Choose whether to include a Message textarea field in the form. REQUIRED',
                                     'highlight' => 0,
                                     'default' => 1,
                                     'options' => [

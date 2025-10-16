@@ -1,8 +1,8 @@
 <?php
 return [
     '@class' => 'Grav\\Common\\Config\\CompiledConfig',
-    'timestamp' => 1760529243,
-    'checksum' => '2f2c2e34a9cd573902151e62cc18234b',
+    'timestamp' => 1760595162,
+    'checksum' => '43682800f0f54400fbe5a748bd233a86',
     'files' => [
         'user/config' => [
             'media' => [
@@ -15,7 +15,7 @@ return [
             ],
             'plugins/recaptcha-form' => [
                 'file' => 'user/config/plugins/recaptcha-form.yaml',
-                'modified' => 1760528983
+                'modified' => 1760595162
             ],
             'plugins/recaptchacontact' => [
                 'file' => 'user/config/plugins/recaptchacontact.yaml',
@@ -435,7 +435,7 @@ return [
                 'enabled' => true,
                 'text_var' => 'Custom Text added by the **Recaptcha Form** plugin (disable plugin to remove)',
                 'subject_toggle' => true,
-                'name_field_type' => 'fname_lname',
+                'name_field_type' => 'full_name',
                 'email_toggle' => true,
                 'message_toggle' => true,
                 'address_toggle' => true,

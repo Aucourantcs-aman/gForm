@@ -115,24 +115,24 @@ class RecaptchaFormPlugin extends Plugin
                     case 'subject':
                         $formHtml .= '<div class="form-group form-subject">';
                         $formHtml .= '<label for="subject" class="form-label">Subject:</label>';
-                        $formHtml .= '<input type="text" id="subject" name="subject" class="form-input">';
+                        $formHtml .= '<input type="text" id="subject" name="subject" class="form-input" required>';
                         $formHtml .= '</div>';
                         break;
                     case 'name':
                         if (($enabledFields['name_field_type'] ?? 'full_name') === 'full_name') {
                             $formHtml .= '<div class="form-group form-name">';
                             $formHtml .= '<label for="name" class="form-label">Name:</label>';
-                            $formHtml .= '<input type="text" id="name" name="name" class="form-input">';
+                            $formHtml .= '<input type="text" id="name" name="name" class="form-input" required>';
                             $formHtml .= '</div>';
                         } else {
                             $formHtml .= '<div class="form-group form-first-name">';
                             $formHtml .= '<label for="first_name" class="form-label">First Name:</label>';
-                            $formHtml .= '<input type="text" id="first_name" name="first_name" class="form-input">';
+                            $formHtml .= '<input type="text" id="first_name" name="first_name" class="form-input" required>';
                             $formHtml .= '</div>';
 
                             $formHtml .= '<div class="form-group form-last-name">';
                             $formHtml .= '<label for="last_name" class="form-label">Last Name:</label>';
-                            $formHtml .= '<input type="text" id="last_name" name="last_name" class="form-input">';
+                            $formHtml .= '<input type="text" id="last_name" name="last_name" class="form-input" required>';
                             $formHtml .= '</div>';
                         }
                         break;
@@ -140,14 +140,14 @@ class RecaptchaFormPlugin extends Plugin
                     case 'email':
                         $formHtml .= '<div class="form-group form-email">';
                         $formHtml .= '<label for="email" class="form-label">Email:</label>';
-                        $formHtml .= '<input type="email" id="email" name="email" class="form-input">';
+                        $formHtml .= '<input type="email" id="email" name="email" class="form-input" required>';
                         $formHtml .= '</div>';
                         break;
 
                     case 'message':
                         $formHtml .= '<div class="form-group form-message">';
                         $formHtml .= '<label for="message" class="form-label">Message:</label>';
-                        $formHtml .= '<textarea id="message" name="message" class="form-input"></textarea>';
+                        $formHtml .= '<textarea id="message" name="message" class="form-input" required></textarea>';
                         $formHtml .= '</div>';
                         break;
 
@@ -278,12 +278,81 @@ class RecaptchaFormPlugin extends Plugin
             $formHtml .= '<button type="submit" id="submit" class="form-button">Submit</button>';
             $formHtml .= '</div>';
 
+            // ✅ Placeholder for AJAX success/error message
+            $formHtml .= '<div id="form-status-message" style="margin-top:10px;display:none;padding:10px;border-radius:5px;font-weight:bold;"></div>';
+
             $formHtml .= '</form>';
 
-            // Inject into current page content
+            // ✅ Add AJAX submission script
+            $formHtml .= '<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("recaptcha-form");
+    const submitBtn = document.getElementById("submit");
+    const statusMsg = document.getElementById("form-status-message");
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        // Validate reCAPTCHA client-side
+        if (typeof grecaptcha !== "undefined" && grecaptcha.getResponse() === "") {
+            alert("Please complete the Google reCAPTCHA.");
+            return false;
+        }
+
+        // Disable button and change text
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "Submitting...";
+
+        // Prepare form data
+        const formData = new FormData(form);
+
+        fetch(window.location.href, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            // Expect HTML page response since PHP reloads page
+            // So, treat any successful fetch as success for UX
+            if (response.ok) {
+                showMessage("Your request has been submitted successfully.", true);
+                form.reset();
+                if (typeof grecaptcha !== "undefined") {
+                    grecaptcha.reset();
+                }
+            } else {
+                showMessage("Error while submitting the form.", false);
+            }
+        })
+        .catch(error => {
+            console.error("AJAX Error:", error);
+            showMessage("Error while submitting the form.", false);
+        })
+        .finally(() => {
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        });
+
+        // Helper to display message
+        function showMessage(message, success) {
+            statusMsg.style.display = "block";
+            statusMsg.style.backgroundColor = success ? "#d4edda" : "#f8d7da";
+            statusMsg.style.color = success ? "#155724" : "#721c24";
+            statusMsg.style.border = success ? "1px solid #c3e6cb" : "1px solid #f5c6cb";
+            statusMsg.textContent = message;
+
+            // Hide after few seconds
+            setTimeout(() => {
+                statusMsg.style.display = "none";
+            }, 5000);
+        }
+    });
+});
+</script>';
+
             $page->content($page->content() . $formHtml);
 
-            // $this->grav['log']->info('Recaptcha form injected into page content.');
         }
     }
     private function handleFormSubmission(): void
@@ -314,7 +383,7 @@ class RecaptchaFormPlugin extends Plugin
         // $this->grav['log']->info('=== RecaptchaForm Submission Received ===');
         foreach ($postData as $key => $value) {
             $displayValue = is_array($value) ? json_encode($value) : $value;
-            $this->grav['log']->info("Form Field '{$key}': {$displayValue}");
+            // $this->grav['log']->info("Form Field '{$key}': {$displayValue}");
         }
 
         // 3. Build email subject and body
@@ -327,18 +396,16 @@ class RecaptchaFormPlugin extends Plugin
         }
         $body .= '</ul>';
 
-        $this->grav['log']->info('=== Email Body ===');
-        $this->grav['log']->info($body);
+        // $this->grav['log']->info('=== Email Body ===');
+        // $this->grav['log']->info($body);
 
         // 4. Get email config
         $emailConfig = $this->config->get('plugins.email');
         $to = $emailConfig['to'] ?? 'aman.aucourantcs@gmail.com';
         $from = $emailConfig['from'] ?? 'aman.aucourantcs@gmail.com';
 
-        // $password = $emailConfig['password'];
-        //  $this->grav['log']->info($password);
 
-        $this->grav['log']->info("Preparing to send email: from='{$from}' to='{$to}'");
+        // $this->grav['log']->info("Preparing to send email: from='{$from}' to='{$to}'");
 
         if (!$to || !$from) {
             $this->grav['log']->error('Email sending failed: missing "to" or "from" address.');
@@ -348,31 +415,31 @@ class RecaptchaFormPlugin extends Plugin
         try {
             // 5. Send email via Grav Email plugin
             if ($this->grav->offsetExists('Email')) {
-                $this->grav['log']->info('Email plugin found. Preparing message object.');
+                // $this->grav['log']->info('Email plugin found. Preparing message object.');
 
                 /** @var \Grav\Plugin\Email\Email $emailService */
                 $emailService = $this->grav['Email'];
 
                 // Create a Message object
                 $message = $emailService->message($subject, $body, 'text/html');
-                $this->grav['log']->info('Message object created.');
+                // $this->grav['log']->info('Message object created.');
 
                 // Set from and to
                 $message->setFrom($from);
-                $this->grav['log']->info("Message From set: {$from}");
+                // $this->grav['log']->info("Message From set: {$from}");
 
                 $message->setTo($to);
-                $this->grav['log']->info("Message To set: {$to}");
+                // $this->grav['log']->info("Message To set: {$to}");
 
                 // Log message content
-                $this->grav['log']->info("Message subject: {$subject}");
-                $this->grav['log']->info("Message body: {$body}");
+                // $this->grav['log']->info("Message subject: {$subject}");
+                // $this->grav['log']->info("Message body: {$body}");
 
                 // Send email
                 $sent = $emailService->send($message);
 
                 if ($sent) {
-                    $this->grav['log']->info('RecaptchaForm email sent successfully using Email plugin.');
+                    // $this->grav['log']->info('RecaptchaForm email sent successfully using Email plugin.');
                 } else {
                     $this->grav['log']->error('Email sending failed: Email plugin send() returned false.');
                     $this->grav['log']->error('Email plugin config: ' . json_encode($this->config->get('plugins.email')));
@@ -385,12 +452,12 @@ class RecaptchaFormPlugin extends Plugin
                 $headers .= "Content-type: text/html; charset=UTF-8\r\n";
                 $headers .= "From: {$from}\r\n";
 
-                $this->grav['log']->info("PHP mail headers: {$headers}");
+                // $this->grav['log']->info("PHP mail headers: {$headers}");
 
                 $sent = mail($to, $subject, $body, $headers);
 
                 if ($sent) {
-                    $this->grav['log']->info('RecaptchaForm email sent successfully via PHP mail().');
+                    // $this->grav['log']->info('RecaptchaForm email sent successfully via PHP mail().');
                 } else {
                     $this->grav['log']->error('Email sending failed: PHP mail() returned false.');
                 }

@@ -1,8 +1,8 @@
 <?php
 return [
     '@class' => 'Grav\\Common\\Config\\CompiledBlueprints',
-    'timestamp' => 1760529257,
-    'checksum' => 'fe2d500706dd8f30de12b20219869782',
+    'timestamp' => 1760595152,
+    'checksum' => '3dec05411d0c814eaffe7814d198a5b0',
     'files' => [
         'user/plugins/admin/blueprints/config' => [
             'media' => [
@@ -79,7 +79,7 @@ return [
             ],
             'plugins/recaptcha-form' => [
                 'file' => 'user/plugins/recaptcha-form/blueprints.yaml',
-                'modified' => 1760433697
+                'modified' => 1760595143
             ]
         ],
         'user/themes' => [
