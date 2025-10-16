@@ -2,11 +2,11 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledJsonFile',
     'filename' => 'E:/xamp-htdocs/gravcms/gForm/user/data/flex/indexes/pages.json',
-    'modified' => 1760521794,
+    'modified' => 1760604123,
     'size' => 635,
     'data' => [
         'version' => '1.5',
-        'timestamp' => 1760521794,
+        'timestamp' => 1760604123,
         'count' => 3,
         'index' => [
             '' => [
@@ -24,25 +24,25 @@ return [
                 'key' => 'home',
                 'storage_key' => '01.home',
                 'template' => 'default',
-                'storage_timestamp' => 1760506358,
+                'storage_timestamp' => 1760601147,
                 'markdown' => [
                     '' => [
-                        'default' => 1760506358
+                        'default' => 1760601147
                     ]
                 ],
-                'checksum' => '2943c5270867f74e9f375cb2ba433e07'
+                'checksum' => '5e9227796c2586dfa233f90c52d74b4d'
             ],
             '02.typography' => [
                 'key' => 'typography',
                 'storage_key' => '02.typography',
                 'template' => 'default',
-                'storage_timestamp' => 1760349261,
+                'storage_timestamp' => 1760601158,
                 'markdown' => [
                     '' => [
-                        'default' => 1760349261
+                        'default' => 1760601158
                     ]
                 ],
-                'checksum' => 'd10e69d9d2e9fd4afda8af0c339cbdec'
+                'checksum' => 'a6a13e2262255c86d71ab8f697def4af'
             ]
         ]
     ]

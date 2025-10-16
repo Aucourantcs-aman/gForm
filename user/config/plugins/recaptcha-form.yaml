@@ -1,6 +1,6 @@
 enabled: true
 text_var: 'Custom Text added by the **Recaptcha Form** plugin (disable plugin to remove)'
-subject_toggle: true
+subject_toggle: false
 name_field_type: full_name
 email_toggle: true
 message_toggle: true

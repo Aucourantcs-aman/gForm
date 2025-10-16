@@ -399,13 +399,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // 3. Build email subject and body
         $subject = $postData['subject'] ?? 'New Contact Form Submission';
-        $body = '<h2>Contact Form Submission</h2><ul>';
+        // Start the HTML email body
+        $body = '
+<div style="font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            background-color:#f9f9f9;
+            padding:20px;">
+  <div style="max-width:600px;margin:auto;background-color:#ffffff;
+              border-radius:8px;
+              box-shadow:0 2px 6px rgba(0,0,0,0.1);
+              overflow:hidden;">
+    <div style="background-color:#0078d4;color:#ffffff;padding:15px 20px;">
+      <h2 style="margin:0;font-size:20px;">New Contact Form Submission</h2>
+    </div>
+    <div style="padding:20px;">
+      <p style="font-size:15px;color:#333;">A new contact form has been submitted with the following details:</p>
+      <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+        <tbody>';
+
+        // Loop through the fields
         foreach ($postData as $key => $value) {
             $displayValue = is_array($value) ? json_encode($value) : $value;
-            $body .= '<li><strong>' . htmlspecialchars($key, ENT_QUOTES, 'UTF-8') . ':</strong> '
-                . htmlspecialchars($displayValue, ENT_QUOTES, 'UTF-8') . '</li>';
+            $label = ucwords(str_replace(['_', '-'], ' ', $key));
+
+            $body .= '
+          <tr>
+            <td style="padding:10px 12px;border-bottom:1px solid #eee;
+                       font-weight:600;color:#444;width:35%;">
+              ' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . ':
+            </td>
+            <td style="padding:10px 12px;border-bottom:1px solid #eee;
+                       color:#555;">
+              ' . nl2br(htmlspecialchars($displayValue, ENT_QUOTES, 'UTF-8')) . '
+            </td>
+          </tr>';
         }
-        $body .= '</ul>';
+
+        $body .= '
+        </tbody>
+      </table>
+      <p style="margin-top:20px;font-size:13px;color:#888;">
+        This email was generated automatically from the contact form on your website.
+      </p>
+    </div>
+  </div>
+</div>';
 
         // $this->grav['log']->info('=== Email Body ===');
         // $this->grav['log']->info($body);
